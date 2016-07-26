@@ -1,0 +1,828 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+
+public class CheckCardNumber 
+{
+	//only vadate files before send to the px 
+	//validate data within those 
+
+	///check if not tab delimited 
+
+	//global variabales
+	public String number;
+	public String code;
+	public String name;
+	public String enroll;
+
+	private Scanner scanner;
+
+	//split by tabs 
+	String cvsSplitBy = "\\t";
+	BufferedWriter writer1;
+	BufferedWriter writer2;
+	BufferedWriter writer3;
+	BufferedWriter writer4;
+
+
+
+
+	//why isnt each string being stored in one bucket in the arrayList????
+
+	public ArrayList<String> list =new ArrayList<String>();
+	public HashMap<Integer, ArrayList<String>> map = new HashMap<Integer,ArrayList<String>>();
+	public HashMap<Integer, ArrayList<String>> map3= new HashMap<Integer,ArrayList<String>>();
+
+	public HashMap<Integer, ArrayList<String>> Map4 = new HashMap<Integer, ArrayList<String>>();
+	public ArrayList<String> val = new ArrayList<String>();
+
+	//List<HashMap<String, ArrayList<String>>>  list = new ArrayList<HashMap<String, ArrayList<String>>>() ;
+
+	//You just need to initialize the arraylist in the beginning and then just add value based on key. 
+	//if you know the keys that I guess you know you can do like this
+
+
+	public HashMap<Integer, ArrayList<String>> map2;
+	//map2.put( Integer, new ArrayList<String>());
+
+
+	public void readFileForParsing() 
+	{
+		//*****IMPORTANT*****
+		//numEntries must be one bigger than the actual number of entires 
+		//if numEntries=156... type 157
+		System.out.println("Enter number of entries plus 1");
+		scanner = new Scanner(System.in);
+
+		//what ever user types in 
+		String numEntries = scanner.nextLine();
+		int result = Integer.parseInt(numEntries);
+		//****IMPORTANT*****
+		//when importing file make sure it is tab delimited(in a weird way)
+		//select columns in other file and copy and paste those columns into CardNumbers3.txt or other file 
+		BufferedReader br = null;
+		//string the length of result so it can hold all the entries 
+
+		//*********
+		String[] numbers = new String[result];//just an example - you have to initialize it to be big enough to hold all the lines!
+		String[] codes = new String[result];
+		String[] names = new String[result];
+		String[] enrollDate = new String[result];
+		//**********
+		String[] amount = new String[result];
+
+		try {
+
+			String CurrentLine;
+			//file buffer is reading 
+			//br = new BufferedReader(new FileReader("CardNumbers3.txt"));
+			br = new BufferedReader(new FileReader("FileForChecking4Fields.txt"));
+
+			//card number file writing to 
+			writer1= new BufferedWriter(new FileWriter("CardNumbers.txt"));
+			//store code file writing to 
+			writer2= new BufferedWriter(new FileWriter("StoreCode.txt"));
+			//store location file writing to 
+			writer3= new BufferedWriter(new FileWriter("StoreNames.txt"));
+			writer4= new BufferedWriter(new FileWriter("EnrollDate.txt"));
+
+
+			int i=0;
+			while ((CurrentLine = br.readLine()) != null) 
+			{
+				//instead of writing to a file
+				//store in array
+				//every tab= new line
+				//call methods on the entries in each array 
+				//split by tab 
+				String[] arr = CurrentLine.split("\\t",4);
+
+				// String[] arr = CurrentLine.split("\\s",2);
+				//String[] arr = CurrentLine.split("    ",3);
+
+				//numbers= new String[arr[0].length()-1];
+				numbers[i] = arr[0];
+				writer1.write( numbers[i] + "\n");
+
+
+
+				//print conntennts of array
+
+				//getting ArrayIndexOutOfBoundsException 
+				//saying these are null
+				//codes= new String[arr[1].length()-1];
+				codes[i] = arr[1];
+				writer2.write( codes[i] + "\n");
+
+				//names= new String[arr[2].length()-1];
+				names[i]= arr[2];
+				writer3.write( names[i] +'\n');
+
+				enrollDate[i]= arr[3];
+				writer4.write( enrollDate[i] +'\n');
+				i++;
+			}
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+
+	public void readColumns() throws IOException
+	{
+		int firstCol, secondCol, thirdCol, fourthCol, firthCol;
+		String CardNumber, StoreCode, StoreName, EnrollDate, Amount;
+		BufferedReader bReader=null;
+		int lineNumber=0;
+		String line = bReader.readLine();
+
+
+		//		StringTokenizer st = new StringTokenizer("this is a test");
+		//		while (st.hasMoreTokens()) {
+		//			if(st.toString().equals("Card Number"))
+		//			{
+		//				st=
+		//			}
+		//			System.out.println(st.nextToken());
+		//		}
+
+		//column numbers 
+
+		//array of the columns in order 
+		String columnOrder []= line.split("\t");
+		for (int i=0; i< columnOrder.length; i++)
+		{
+			if (columnOrder[i].equals("Card Number"))
+			{
+				//card Number 
+				firstCol = i;
+			}
+			else if (columnOrder[i].equals("Store Code"))
+			{
+				//Store code 
+				secondCol = i;
+			}
+			else if (columnOrder[i].equals("Store Name"))
+			{
+				//storeName
+				thirdCol = i;
+			}
+		}
+
+
+
+		//		while ((line = bReader.readLine()) != null)
+		//		{
+		//			lineNumber++;
+		//			String datavalue[] = line.split("\t");
+		//			CardNumber= datavalue[firstCol];
+		//			StoreCode = datavalue[secondCol];
+		//			StoreName = datavalue[thirdCol];
+		//			EnrollDate = datavalue[fourthCol];
+		//
+		//			System.out.println(CardNumber + "'" + StoreCode + "," + StoreName);
+		//
+		//		}
+	}
+
+
+
+	public void write (String filename, String[] x) throws IOException{
+		BufferedWriter outputWriter = null;
+		outputWriter = new BufferedWriter(new FileWriter(filename));
+		for (int i = 0; i < x.length; i++) {
+			// Maybe:
+			outputWriter.write(x[i]+"");
+			// Or:
+			//		    outputWriter.write(Integer.toString(x[i]));
+			//		    outputWriter.newLine();
+		}
+		outputWriter.flush();  
+		outputWriter.close();  
+	}
+
+	//check the parsed file to see if is validated 
+	public void readCardNumberFileForChecking() throws IOException
+	{
+		//		System.out.println("what is the name of the file?");
+		//		scanner = new Scanner(System.in);
+		//		//asks file name then what header want to check for 
+		//		//asks what header we are checking 
+		//		//calls the function that checks the specific header 
+		//		String file = scanner.nextLine();
+		scanner = new Scanner(new File("CardNumbers.txt"));
+		String firstLine = scanner.nextLine();
+
+		//		if(!firstLine.equals("Card Number"))	
+		//		{
+		//			System.out.println("Header is incorrect");	
+		//		}
+		//		else
+		//		{
+
+		while(scanner.hasNext())
+		{
+			number= scanner.nextLine();
+			checkCardNumber (number);
+		}
+	}
+
+
+
+	//get this card from opening the file and getting the first input 
+	public void checkCardNumber(String card) 
+	{
+		//*******************************				
+		//Map4.put(0, val);
+		//*******************************				
+		int length= card.length();
+
+		//check length of card number 
+		if(length > 5 && length <20)
+		{
+			//System.out.println("correct length");
+			//if(isNumeric(card))
+			if(isLong(card))
+				//****if(isInteger(card))
+			{
+				//add card number to the array of linked list at the index length 
+				//arrayOfLists[length].add(card);
+
+				//System.out.println("card: " + number + "is valid " );
+				//System.out.println(length + map.values().size());
+
+				//index into arraylist 
+				//linkedArrayList.add(length, linkedArrayList.add(linkedArrayList.get(length)));
+				//map.get() gives me arraylist, then add to the array list 
+				//add inserts at the end 
+				//get the index in the map where cards of that length are stored 
+
+				//map.get(length).add(card);
+
+				//System.out.println(length + ":" + map.get(length).size());
+				//****************************************************************************				
+				//				ArrayList<String> c = Map4.get(length);
+				//				//cant add to something thats null 
+				//				if (c == null) {
+				//					System.out.println("Card of length " + length + " is empty.");
+				//				} else {
+				//					c.add(card);
+				//				}
+				//***********************************************************************************************										
+				//System.out.println(length + ":" + Map4.get(length).size());
+				//return;
+
+			}
+			else
+			{
+				//need to print out becasue card number is not a number 
+				System.out.println("Card: " + number + " is not a number ");
+				return;
+			}
+		}
+		else 
+		{
+			System.out.println("Card: " + number + " is the incorrect length ");
+			return;
+		}
+	}
+
+	//other read header entry files 
+	public void readStoreCodeFileForChecking() throws IOException
+	{
+		System.out.println("");
+		String storeCode;
+		scanner = new Scanner(new File("StoreCode.txt"));
+		//call method frm array 
+
+
+		String firstLine = scanner.nextLine();
+
+		//		if(!firstLine.equals("Store Code"))	
+		//		{
+		//			System.out.println("Header is incorrect");	
+		//		}
+		//		else
+		//		{
+		while(scanner.hasNext())
+		{
+			//scanner.next();
+			//tall[i++] = scanner.next();
+			//number=scanner.next()
+			storeCode= scanner.nextLine();
+
+			//checkStoreCode (storeCode);
+		}
+		//		}
+	}
+
+
+	public void readStoreNameFileForChecking() throws IOException
+	{
+		scanner = new Scanner(new File("StoreNames.txt"));
+
+		String firstLine = scanner.nextLine();
+
+		//		if(!firstLine.equals("Store Name"))	
+		//		{
+		//			System.out.println("Header is incorrect");	
+		//		}
+		//		else
+		//		{
+		while(scanner.hasNext())
+		{
+			//scanner.next();
+			//tall[i++] = scanner.next();
+			//number=scanner.next()
+			name= scanner.nextLine();
+
+			//checkStoreName(name);
+		}
+		//}
+	}
+
+	public void checkStoreCode(String card)
+	{
+		int length= card.length();
+
+		//check length of card number 
+		if(length > 0 && length <9)
+		{
+			if(!isAlphanumeric(card))
+			{
+				System.out.println("Code is not alphanumeric");
+			}
+		}
+
+	}
+	public void checkStoreName(String card) 
+	{
+		int length= card.length();
+
+		//check length of card number 
+		if(length > 0 && length <81)
+		{
+			return;
+		}
+		if(!isAlphanumeric(card))
+		{
+			System.out.println("Name is not alphanumeric");
+			return;
+		}
+
+
+	}
+	public void readEnrollDateForChecking() throws IOException
+	{
+		//create file called enrollDate.txt
+		scanner = new Scanner(new File("EnrollDate.txt"));
+
+		String firstLine = scanner.nextLine();
+
+		//		if(!firstLine.equals("Store Code"))	
+		//		{
+		//			System.out.println("Header is incorrect");	
+		//		}
+		//		else
+		//		{
+		while(scanner.hasNext())
+		{
+			//scanner.next();
+			//tall[i++] = scanner.next();
+			//number=scanner.next()
+			enroll= scanner.nextLine();
+			checkEnrollDate(enroll);
+		}
+		//		}
+	}
+
+	public void checkEnrollDate(String card) 
+	{
+		System.out.println("How are dates written? with - or /");
+		scanner = new Scanner(System.in);
+
+		//what ever user types in 
+		String howDate = scanner.nextLine();
+		//check to make sure is a date 
+		//     4/5/2016
+		//    04/05/2010
+		//	  4/5/16
+		//if there isnt one then use current date time 
+		if(howDate == "-")
+		{
+			if(!isDateDash(card))
+			{
+				System.out.println("not valid date format - ");
+
+			}
+			else 
+			{
+				System.out.println(card +" valid date format - ");
+
+			}
+		}
+		else if( howDate == "/")
+		{
+			if(!isDate(card))
+			{
+				System.out.println("not valid date format /");
+			}
+			else
+			{
+				System.out.println(" valid date format - ");
+
+			}
+		}
+		System.out.println("Enroll dates are correct");
+	}
+
+	public Boolean isDate(String str)
+	{
+		Date date = new Date();
+
+		Format formatter = new SimpleDateFormat("MM/dd/yy HH:mm");
+		str = formatter.format(date);
+		((DateFormat) formatter).setLenient(false);
+		try {
+			((DateFormat) formatter).parse(str.trim());
+		} 
+		catch (ParseException pe) 
+		{
+			return false;
+		}
+		return true;
+
+
+	}
+
+	public Boolean isDateDash(String str)
+	{
+		Format formatter2 = new SimpleDateFormat("dd-MMM-yy HH:mm");
+		str = formatter2.format(new Date());
+		if (str == null)
+			return false;
+
+		//set the format to use as a constructor argument
+		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (str.trim().length() != ((SimpleDateFormat) formatter2).toPattern().length())
+		{
+			return false;
+		}
+		((DateFormat) formatter2).setLenient(false);
+		try {
+			((DateFormat) formatter2).parse(str.trim());
+		} 
+		catch (ParseException pe) 
+		{
+			return false;
+		}
+		return true;
+
+	}
+
+
+
+	//or 		int result = Integer.parseInt(card);
+	//force variable to parse as int and if it throws an exception then that means its not an int 
+	public static boolean isNumeric(String str)
+	{
+		for (char c : str.toCharArray())
+		{
+			if (!Character.isDigit(c)) return false;
+		}
+		return true;
+	}
+
+	public static boolean isInteger(String s) {
+		try { 
+			Integer.parseInt(s); 
+		} catch(NumberFormatException e) { 
+			return false; 
+		} catch(NullPointerException e) {
+			return false;
+		}
+		// only got here if we didn't return false
+		return true;
+	}
+
+	public static Integer tryParse(String text) {
+		try {
+			return Integer.parseInt(text);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	public boolean isLong(String card)
+	{
+		try{
+			//int num = Integer.parseInt(card);
+			long num = Long.parseLong(card);
+			// is an integer!
+			return true;
+		} catch (NumberFormatException e) {
+			// not an integer!
+			return false;
+		}
+
+	}
+
+
+	public boolean isAlphanumeric(String str) {
+		for (int i=0; i<str.length(); i++) {
+			char c = str.charAt(i);
+			if (c < 0x30 || (c >= 0x3a && c <= 0x40) || (c > 0x5a && c <= 0x60) || c > 0x7a)
+				return false;
+		}
+		return true;
+	}
+
+	public void readFileForParsing2() 
+	{
+		//*****IMPORTANT*****
+		//numEntries must be one bigger than the actual number of entires 
+		//if numEntries=156... type 157
+		System.out.println("Enter number of entries plus 1");
+		scanner = new Scanner(System.in);
+
+		//what ever user types in 
+		String numEntries = scanner.nextLine();
+		int result = Integer.parseInt(numEntries);
+		//****IMPORTANT*****
+		//when importing file make sure it is tab delimited(in a weird way)
+		//select columns in other file and copy and paste those columns into CardNumbers3.txt or other file 
+		BufferedReader br = null;
+		//string the length of result so it can hold all the entries 
+
+		//*********
+		String[] numbers = new String[result];//just an example - you have to initialize it to be big enough to hold all the lines!
+		String[] codes = new String[result];
+		String[] names = new String[result];
+		String[] enrollDate = new String[result];
+		//**********
+
+		String[] amount = new String[result];
+
+
+		int i=0;
+
+		try {
+			String CurrentLine;
+			br = new BufferedReader(new FileReader("FileForChecking4Fields.txt"));
+			CurrentLine=br.readLine();
+			StringTokenizer st = new StringTokenizer(CurrentLine);
+			while (st.hasMoreTokens()) {
+				// if(st.toString().equals("Card Number"))
+				if(st.nextToken("//t").equals("Card Number"))
+				{
+					//how many arrays have 
+
+					//numbers[]= 
+				}
+				System.out.println(st.nextToken());
+			}
+
+
+			//file buffer is reading 
+			//br = new BufferedReader(new FileReader("CardNumbers3.txt"));
+
+			//card number file writing to 
+			writer1= new BufferedWriter(new FileWriter("CardNumbers.txt"));
+			//store code file writing to 
+			writer2= new BufferedWriter(new FileWriter("StoreCode.txt"));
+			//store location file writing to 
+			writer3= new BufferedWriter(new FileWriter("StoreNames.txt"));
+			writer4= new BufferedWriter(new FileWriter("EnrollDate.txt"));
+
+
+			//int i=0;
+			while ((CurrentLine = br.readLine()) != null) 
+			{
+				//instead of writing to a file
+				//store in array
+				//every tab= new line
+				//call methods on the entries in each array 
+				//split by tab 
+				String[] arr = CurrentLine.split("\\t",4);
+
+				// String[] arr = CurrentLine.split("\\s",2);
+				//String[] arr = CurrentLine.split("    ",3);
+
+				//numbers= new String[arr[0].length()-1];
+				numbers[i] = arr[0];
+				writer1.write( numbers[i] + "\n");
+
+
+
+				//print conntennts of array
+
+				//getting ArrayIndexOutOfBoundsException 
+				//saying these are null
+				//codes= new String[arr[1].length()-1];
+				codes[i] = arr[1];
+				writer2.write( codes[i] + "\n");
+
+				//names= new String[arr[2].length()-1];
+				names[i]= arr[2];
+				writer3.write( names[i] +'\n');
+
+				enrollDate[i]= arr[3];
+				writer4.write( enrollDate[i] +'\n');
+				i++;
+			}
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+
+
+	public void readFile() throws IOException
+	{
+		
+
+		String[] numbers=null;
+		String[] codes=null;
+		String[] names=null;
+		String[] enrollDates=null;
+		writer1= new BufferedWriter(new FileWriter("CardNumbers.txt"));
+		//store code file writing to 
+		writer2= new BufferedWriter(new FileWriter("StoreCode.txt"));
+		//store location file writing to 
+		writer3= new BufferedWriter(new FileWriter("StoreNames.txt"));
+		writer4= new BufferedWriter(new FileWriter("EnrollDate.txt"));
+
+
+		//types  of headers that could be found 
+
+
+		//determine number of lines? 
+		System.out.println("What file would you like me to read?");
+		scanner = new Scanner(System.in);
+
+		//what ever user types in 
+		BufferedReader br;
+		try
+		{
+			String file = scanner.nextLine();
+			br = new BufferedReader(new FileReader(file));
+			String CurrentLine=br.readLine();
+
+
+			String[] arr = CurrentLine.split("\\t");
+			System.out.println("Ok, here is a list of headers I found in your file: " );
+			for (String s : arr) 
+			{
+				System.out.println(s);
+			}
+			System.out.println("Are these headers correct?  Type Y or N");
+			boolean headersAreCorrect=false;
+
+			String answer = scanner.nextLine();
+			if(answer.equals("Y") || answer.equals("Y "))
+			{
+				headersAreCorrect=true;
+			}
+			else if(answer.equals("N") | answer.equals("N "))
+			{
+				headersAreCorrect=false;
+			}
+			//if the headers are correct then...
+			int index=0;
+			if(headersAreCorrect)
+			{
+				System.out.println("Enter number of entries plus 1");
+				scanner = new Scanner(System.in);
+
+				//what ever user types in 
+				String numEntries = scanner.nextLine();
+				int result = Integer.parseInt(numEntries);
+				numbers[] = new String[result];
+				while ((CurrentLine = br.readLine()) != null) 
+				{
+					String[] columns = CurrentLine.split("\\t",4);
+
+					//continue and call each of the methods that the headers are attached to
+
+					//figure out what first header is an call that method on that headers data 
+					for(int i=0; i< arr.length;i++)
+					{
+						if(arr[0].equals("Card Number"))
+						{
+							numbers[i] = columns[0];
+							writer1.write( numbers[i] + "\n");
+							System.out.println("Card Numbers are being stored in CardNumbers.txt");
+							index++;
+						}
+						else if(arr[0].equals("Store Code"))
+						{
+							codes[index]=columns[0];
+							writer2.write( codes[index] + "\n");
+							index++;
+							
+						}
+						else if(arr[0].equals("Store Name"))
+						{
+							names[index]=columns[0];
+							writer3.write( names[index] + "\n");
+							index++;
+
+							
+						}
+						else if(arr[0].equals("Enroll Date"))
+						{
+							enrollDates[index]=columns[0];
+							writer4.write( enrollDates[index] + "\n");
+							index++;
+							
+						}
+						else
+						{
+							System.out.println("header did not match any of our headers");
+						}
+						
+						if(arr[1].equals("Store Code"))
+						{
+							codes[index] = columns[1];
+							writer2.write( codes[index] + "\n");
+							System.out.println("Card Numbers are being stored in StoreCode.txt");
+							index++;
+						}
+						else if(arr[1].equals("Card Number"))
+						{
+							numbers[index]=columns[1];
+							writer1.write( numbers[index] + "\n");
+							index++;
+
+							
+						}
+						else if(arr[1].equals("Store Name"))
+						{
+							names[index]=columns[0];
+							writer3.write( names[index] + "\n");
+
+							
+						}
+						else if(arr[1].equals("Enroll Date"))
+						{
+							enrollDates[index]=columns[0];
+							writer4.write( enrollDates[index] + "\n");
+
+							
+						}
+						else
+						{
+							System.out.println("header did not match any of our headers");
+						}
+						
+					}
+				}
+			}
+
+
+		}
+
+
+		catch(IOException e)
+		{
+			//
+		}
+	}
+
+}
+
+
+

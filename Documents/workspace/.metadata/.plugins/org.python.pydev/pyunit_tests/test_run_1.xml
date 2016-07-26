@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pydev-testrun version="1.0"?><pydev-testsuite>
+<summary errors="1" failures="0" finished="true" name="Test Run: 1" tests="0" total_time="Finished in: 0.00 secs."/>
+<test location="/Users/acoomber/Documents/workspace/AlohaDataDumpScript/Package/Parse.py" status="error" test="Package.Parse" time="0">
+<stdout/>
+<stderr><![CDATA[Traceback (most recent call last):
+  File "/Users/acoomber/Downloads/Eclipse.app/Contents/Eclipse/plugins/org.python.pydev_5.1.2.201606231256/pysrc/_pydev_runfiles/pydev_runfiles.py", line 468, in __get_module_from_str
+    mod = __import__(modname)
+  File "/Users/acoomber/Documents/workspace/AlohaDataDumpScript/Package/Parse.py", line 8, in <module>
+    with open('SimmsDataDump .csv', 'rt', encoding='UTF8') as cardfile:
+FileNotFoundError: [Errno 2] No such file or directory: 'SimmsDataDump .csv'
+ERROR: Module: Package.Parse could not be imported (file: /Users/acoomber/Documents/workspace/AlohaDataDumpScript/Package/Parse.py).
+]]></stderr>
+</test>
+<launch mode="run">
+<launch_memento><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration local="true" path="AlohaDataDumpScript AlohaDataDumpScript"/>
+]]></launch_memento>
+</launch>
+</pydev-testsuite>

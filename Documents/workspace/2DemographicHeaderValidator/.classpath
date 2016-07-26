@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="bin/src/src"/>
+	<classpathentry kind="lib" path="bin/src/DataVerification23.jar"/>
+	<classpathentry kind="lib" path="bin/src/DataVerification24.jar"/>
+	<classpathentry kind="lib" path="bin/src/DataVerification25.jar"/>
+	<classpathentry kind="lib" path="bin/src/DataVerification26.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin/src/src"/>
+</classpath>

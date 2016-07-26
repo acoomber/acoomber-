@@ -1,0 +1,23 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/Users/acoomber/Documents/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/AlohaDataDumpScript/com.python.pydev.analysis/v2_indexcache
+Package.Parse|1467901990000000000|/Users/acoomber/Documents/workspace/AlohaDataDumpScript/Package/Parse.py
+Package.__init__|1467835459000000000|/Users/acoomber/Documents/workspace/AlohaDataDumpScript/Package/__init__.py
+-- END DISKCACHE
+-- START DICTIONARY
+1
+1=Package.Parse
+-- END DICTIONARY
+-- START TREE 1
+7
+car|2|card_count!11@cardnum!11@
+dat|1|date!11@
+lin|1|line_count!11@
+rea|2|reader!11@read_row!11@
+row|1|row_count!11@
+sto|1|store_code!11@
+wri|1|writer!11@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE
